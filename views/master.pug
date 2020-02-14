@@ -2,6 +2,7 @@ html
     head
         title
             block title
+        link(rel='icon', type='image/png', href='/media/icon.png')
         link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto&display=swap')
         link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css')
         link(rel='stylesheet', href='/css/style.css')
@@ -10,12 +11,21 @@ html
         div
             img(src='/media/logo.png')
         ul(class='nav')
-            li <a href="/">Home</a>
-            li <a href="/movieSearch">Search movies</a>
-            li <span class="dropdown">Add...</span>
+            li
+                a(href="/") Home
+            li
+                a(href="/movieList") List all movies
+            li
+                a(href="/movieSearch") Search movies
+            li
+                span(class="dropdown") Add...
                 ul
-                    li <a href="/addMovie">Add Movie Data</a>
-                    li <a href="/addActor">Add Actor Data</a>
-            li <a href="/createAccount">Create account</a>
-            li <a href="/signIn">Sign In</a>
+                    li
+                        a(href="/addMovie") Add Movie Data
+                    li
+                        a(href="/addActor") Add Actor Data
+            li
+                a(href="/createAccount") Create account
+            li
+                a(href="/signIn") Sign In
         block content
