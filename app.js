@@ -18,20 +18,23 @@ app.use('/media', express.static('media'));
 // All relevant files are watched for changes
 // Pages load much faster when this is turned off
 // Use this for dev only
-var browserSync = require('browser-sync');
-var bs = browserSync.create();
-bs.init({
-    watch: true,
-    // Only watch relevant file types
-    files: ['**/*.js', '**/*.css', '**/*.pug'],
-    watchOptions: {
-        ignoreInitial: true,
-        ignored: ["node_modules", "logs", ".git"],
-    },
-    reloadDelay: 300,
-    logSnippet: false
-})
-app.use(require('connect-browser-sync')(bs, { injectHead: true }));
+
+// var browserSync = require('browser-sync');
+// var bs = browserSync.create();
+// bs.init({
+//     ui: false,
+//     watch: true,
+//     // Only watch relevant file types
+//     files: ['**/*.js', '**/*.css', '**/*.pug'],
+//     watchOptions: {
+//         ignoreInitial: true,
+//         ignored: ["node_modules", "logs", ".git"],
+//     },
+//     reloadDelay: 100,
+//     injectChanges: false,
+//     logSnippet: false
+// })
+// app.use(require('connect-browser-sync')(bs, { injectHead: true }));
 
 // The pug template engine is used for rendering
 app.set('view engine', 'pug');

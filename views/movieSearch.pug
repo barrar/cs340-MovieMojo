@@ -4,6 +4,7 @@ block title
 block content
     h1= 'Search results'
     table
-    div(class='verticalLinks')
+    ul(class='verticalList')
         for movie in movieList
-            a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}
+            li
+                a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}

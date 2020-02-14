@@ -3,7 +3,9 @@ block title
     | Actor Details
 block content
     h1 #{actor.name}
-    div Born on #{actor.birthday}
-    div(class='verticalLinks')
+    h4 Born on #{actor.birthday}
+    h2 Filmography
+    ul(class='verticalList')
         for movie in actor.movies
-            a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}
+            li
+                a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}
