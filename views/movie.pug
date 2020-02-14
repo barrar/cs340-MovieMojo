@@ -1,0 +1,9 @@
+extends master.pug
+block title
+    | Movie List
+block content
+    h1= movie.name
+    div= movie.releaseDate
+    div
+        for actor in movie.actors
+            a(href='/actor/'+actor.actorID) #{actor.name}

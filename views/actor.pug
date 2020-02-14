@@ -1,0 +1,9 @@
+extends master.pug
+block title
+    | Actor Details
+block content
+    h1 #{actor.name}
+    div Born on #{actor.birthday}
+    div(class='verticalLinks')
+        for movie in actor.movies
+            a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}

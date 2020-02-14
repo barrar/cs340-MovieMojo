@@ -1,0 +1,9 @@
+extends master.pug
+block title
+    | Movie Search
+block content
+    h1= 'Search results'
+    table
+    div(class='verticalLinks')
+        for movie in movieList
+            a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}

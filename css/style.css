@@ -1,0 +1,106 @@
+a, .submit {
+  color: #fff;
+  background: #009e79;
+  padding: 15px;
+  margin: 15px auto;
+  border-radius: 8px;
+  display: inline-block;
+  border: none;
+}
+
+a:hover {
+  background: #004938;
+  color: #fff;
+  transition: all 0.6s ease 0s;
+  text-decoration: none;
+}
+
+.verticalLinks a{
+  display: block;
+  width: auto;
+}
+
+h2{
+    border-top: 2px solid #009e79;
+    padding-top: 10px;
+}
+
+ul{
+    padding: 0;
+}
+.actors li{
+    list-style: none;
+    display: inline;
+}
+
+.actors a, .add a, .container a{
+    padding: 5px 10px;
+    margin-right: 5px;
+}
+
+body {
+  color: #009e79;
+  font-family: "Roboto", sans-serif;
+}
+
+input {
+  display: block;
+}
+
+#reviewText {
+  width: 100%;
+  height: 300px;
+}
+
+.container {
+  border: 2px solid #009e79;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+fieldset {
+  border: none;
+  min-width: 0;
+}
+
+.ratingPicker {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.ratingPicker input {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+.ratingPicker input + label {
+  margin-right: 2px;
+  padding-top: 5px;
+  border: solid 1px #ddd;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+}
+
+.ratingPicker input:hover + label {
+  border-color: #009e79;
+  background-color: #009e79;
+  color: #fff;
+  box-sizing: border-box;
+  transition: all 0.6s ease 0s;
+  cursor: pointer;
+}
+
+.ratingPicker input:checked + label {
+  background-color: #009e79;
+  border-color: #009e79;
+  color: #fff;
+  transition: all 0.6s ease 0s;
+}

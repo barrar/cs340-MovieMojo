@@ -1,0 +1,14 @@
+html
+    head
+        title= 'Person List'
+        style
+            include style.css
+    body
+        h1= 'Person List'
+    table
+        for person in personList
+            tr
+                td= person.abc
+                td= person.id
+                td= person.address
+                td= person.phone
