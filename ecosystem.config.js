@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: 'API',
+        name: 'MovieMojo',
         script: 'app.js',
 
         error_file: 'logs/err.log',

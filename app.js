@@ -50,4 +50,4 @@ for (var i in routes) app.use('/', routes[i]);
 // Listen on port 80, this requires root
 // A better setup would be some other port like port 3050
 // and then use nginx to proxy requests with https and http2
-app.listen(80, function() {});
+app.listen(8001, function() {});
