@@ -1,0 +1,11 @@
+extends master.pug
+block title
+    | Search for an Actor
+block content
+    h2 Search for an Actor
+    br
+    form.narrow(method='POST' action='/searchActor')
+          div.form-group
+            label(for='name') Actor Name:
+            input#email.form-control(type='text' name='actorName' placeholder='Actor Name')
+          button.btn.btn-primary(type='submit') Search

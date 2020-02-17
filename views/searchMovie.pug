@@ -1,0 +1,11 @@
+extends master.pug
+block title
+    | Search Movie
+block content
+    h2 Search Movie 
+    br
+    form.narrow(method='POST' action='/searchMovie')
+          div.form-group
+            label(for='name') Movie Name:
+            input#name.form-control(type='text', name='movieName', placeholder='Movie Name')
+          button.btn.btn-primary(type='submit') Search

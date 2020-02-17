@@ -1,10 +1,10 @@
 extends master.pug
 block title
-    | Movie Search
+    | Movie List
 block content
-    h1= 'Search results'
+    h1= 'List of Movies'
     table
     ul(class='verticalList')
         for movie in movieList
             li
-                a(href='/movie/'+movie.movieID) #{movie.name}, released #{movie.releaseDate}
+                a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}

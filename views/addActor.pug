@@ -1,0 +1,14 @@
+extends master.pug
+block title
+    | Add Actor
+block content
+    h2 Add Actor 
+    br
+    form(method='POST' action='/addActor')
+          div.form-group
+            label(for='name') Name:
+            input#email.form-control(type='text', name='name')
+          div.form-group
+            label(for='birthday') Birthday:
+            input#pw.form-control(type='date' name='birthday')
+          button.btn.btn-primary(type='submit') Submit

@@ -8,22 +8,28 @@ html
         link(rel='stylesheet', href='/css/style.css')
     body
     div(class='container')
-        div
-            img(src='/media/logo.png')
+        img(id='logo' src='/media/logo.png')
         ul(class='nav')
             li
                 a(href="/") Home
             li
-                a(href="/movieList") List all movies
+                a(href="/movieList") All Movies
             li
-                a(href="/movieSearch") Search movies
+                a(href="/listActors") All Actors
+            li
+                span(class="dropdown") Search...
+                ul
+                    li
+                        a(href="/searchMovie") for a Movie
+                    li
+                        a(href="/searchActor") for an Actor
             li
                 span(class="dropdown") Add...
                 ul
                     li
-                        a(href="/addMovie") Add Movie Data
+                        a(href="/addMovie") Movie Data
                     li
-                        a(href="/addActor") Add Actor Data
+                        a(href="/addActor") Actor Data
             li
                 a(href="/createAccount") Create account
             li

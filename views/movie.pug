@@ -3,7 +3,7 @@ block title
     | Movie Details
 block content
     h1= movie.name
-    div= movie.releaseDate
+    h4 Release Date: #{movie.releaseDate}
     ul(class='verticalList')
         for actor in movie.actors
             li

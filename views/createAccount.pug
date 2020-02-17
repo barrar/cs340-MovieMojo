@@ -1,0 +1,12 @@
+extends master.pug
+block title
+    | Create Account
+block content
+    h2 Create Account 
+    br
+    form.narrow(method='POST' action='/createAccount')
+        input.form-control(type='text' name='name' placeholder='Full Name')
+        input.form-control(type='email' name='email' placeholder='Email')
+        input.form-control(type='password' name='password' placeholder='Password')
+        input.form-control(type='password' name='confirmPassword' placeholder='Confirm Password')
+        button.btn.btn-primary(type='submit') Create Account
