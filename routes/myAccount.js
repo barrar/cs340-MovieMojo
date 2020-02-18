@@ -3,7 +3,7 @@ var moment = require('moment');
 var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
-router.get('/movieList', function(req, res) {
+router.get('/myAccount', function(req, res) {
 
     var connection = mysqlConnection();
     connection.connect((err) => {
@@ -33,7 +33,7 @@ router.get('/movieList', function(req, res) {
             }
 
 
-            res.render('movieList', { "movieList": movieList });
+            res.render('myAccount', { "movieList": movieList });
         }
     });
     connection.end();

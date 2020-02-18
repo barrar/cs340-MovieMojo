@@ -13,7 +13,7 @@ html
             li
                 a(href="/") Home
             li
-                a(href="/movieList") All Movies
+                a(href="/listMovies") All Movies
             li
                 a(href="/listActors") All Actors
             li
@@ -30,8 +30,14 @@ html
                         a(href="/addMovie") Movie Data
                     li
                         a(href="/addActor") Actor Data
+                    li
+                        a(href="/linkActors") Link Actors
             li
                 a(href="/createAccount") Create account
             li
+                a(href="/myAccount") My Account
+            li
                 a(href="/signIn") Sign In
+            //- Later we can make a conditional to show either "Sign In" or "My account"
+            //- https://pugjs.org/language/code.html#unbuffered-code
         block content

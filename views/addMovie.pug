@@ -2,13 +2,12 @@ extends master.pug
 block title
     | Add Movie
 block content
-    h2 Add Movie 
-    br
-    form(method='POST' action='/addMovie')
+    h2 Add Movie
+    form.narrow(method='POST' action='/addMovie')
           div.form-group
             label(for='name') Name:
-            input#email.form-control(type='text', name='name')
+            input#email.form-control(type='text', name='name' autocomplete='off' required)
           div.form-group
             label(for='releaseDate') Release Date:
-            input#pw.form-control(type='date' name='releaseDate' placeholder='MM-DD-YYYY')
+            input#pw.form-control(type='date' name='releaseDate' autocomplete='off' required)
           button.btn.btn-primary(type='submit') Submit

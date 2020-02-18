@@ -9,3 +9,8 @@ block content
         for movie in actor.movies
             li
                 a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+    div.add
+        | This actor is not in your favorites: 
+        a(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added to favorites';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);")
+            | Add actor to favorites
+    div#status(style='font-weight:bold;font-size:30px')

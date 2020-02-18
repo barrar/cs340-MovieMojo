@@ -1,11 +1,10 @@
 extends master.pug
 block title
-    | Search Movie
+    | Search Movies
 block content
-    h2 Search Movie 
-    br
+    h2 Search Movies
     form.narrow(method='POST' action='/searchMovie')
-          div.form-group
-            label(for='name') Movie Name:
-            input#name.form-control(type='text', name='movieName', placeholder='Movie Name')
-          button.btn.btn-primary(type='submit') Search
+        div.relative
+            input.form-control(type='text' name='movieName' autocomplete='off' required)
+            span.placeholderLabel Movie Name
+        button.btn.btn-primary(type='submit') Search

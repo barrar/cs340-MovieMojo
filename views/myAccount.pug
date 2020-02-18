@@ -1,0 +1,43 @@
+extends master.pug
+block title
+    | Movie List
+block content
+    h1= 'My Account'
+    h4 Watched Movies
+    ul(class='verticalListSectioned')
+        li
+            a(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - Released on #{movieList[0].releaseDate}
+            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+        //- for movie in movieList
+        //-     li
+        //-         a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+        //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    h4 Watch Later
+    ul(class='verticalListSectioned')
+        li
+            a(href='/movie/'+movieList[1].movieID) #{movieList[1].name} - Released on #{movieList[1].releaseDate}
+            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+        //- for movie in movieList
+        //-     li
+        //-         a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+        //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    h4 Favorite Actors
+    ul(class='verticalListSectioned')
+        li
+            a(href='/actor/1') Morgan Freeman
+            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+        li
+            a(href='/actor/2') Tim Robbins
+            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    h4 My Ratings
+    ul(class='verticalListSectioned')
+        li
+            span.ratingView 8
+            a.ratingView(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - Released on #{movieList[0].releaseDate}
+            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    h4 Change Password
+        form.narrow(method='POST' action='/myAccount')
+            input.form-control(type='password' name='oldPassword' placeholder='Old Password' autocomplete='off' required)
+            input.form-control(type='password' name='password' placeholder='New Password' autocomplete='off' required)
+            input.form-control(type='password' name='confirmPassword' placeholder='Confirm Password' autocomplete='off' required)
+            button.btn.btn-primary(type='submit') Change Password
