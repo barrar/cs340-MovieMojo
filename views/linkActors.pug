@@ -3,12 +3,15 @@ block title
     | Add Actor
 block content
     h2 Add Actors to a Movie
-    div Make sure you select the correct movie or actor by verifying the name and date
+    div Make sure you select the correct movie or actor by verifying the name and date.
+    div As you type, movies/actors and their associated date will appear below.
+    div Select the movie/actor by clicking on it.
+    div The form will submit the associated IDs and those will be added to the `actorsMovies` table.
     form.narrow(method='POST' action='/linkActors')
           div.form-group
             label(for='movieName') Movie:
-            input#email.form-control(type='text', name='movieName' placeholder='As you type, movies + release dates will appear' autocomplete='off' required)
+            input#email.form-control(type='text', name='movieName' placeholder='As you type, movies + release dates will appear below' autocomplete='off' required)
           div.form-group
             label(for='actorName') Actors:
-            input#pw.form-control(type='text' name='actorName' placeholder='As you type, actors + birthdays will appear' autocomplete='off' required)
+            input#pw.form-control(type='text' name='actorName' placeholder='As you type, actors + birthdays will appear below' autocomplete='off' required)
           button.btn.btn-primary(type='submit') Add actor to movie

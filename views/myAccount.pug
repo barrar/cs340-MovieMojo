@@ -36,8 +36,14 @@ block content
             a.ratingView(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - Released on #{movieList[0].releaseDate}
             button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
     h4 Change Password
-        form.narrow(method='POST' action='/myAccount')
-            input.form-control(type='password' name='oldPassword' placeholder='Old Password' autocomplete='off' required)
-            input.form-control(type='password' name='password' placeholder='New Password' autocomplete='off' required)
-            input.form-control(type='password' name='confirmPassword' placeholder='Confirm Password' autocomplete='off' required)
-            button.btn.btn-primary(type='submit') Change Password
+    form.narrow(method='POST' action='/myAccount')
+        div.relative
+            input.form-control(type='password' name='oldPassword' required)
+            span.placeholderLabel Old Password
+        div.relative
+            input.form-control(type='password' name='password' required)
+            span.placeholderLabel New Password
+        div.relative
+            input.form-control(type='password' name='confirmPassword' required)
+            span.placeholderLabel Confirm Password
+        button.btn.btn-primary(type='submit') Change Password

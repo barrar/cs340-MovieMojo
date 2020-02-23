@@ -4,10 +4,16 @@ block title
 block content
     h2 Add Actor
     form.narrow(method='POST' action='/addActor')
-          div.form-group
-            label(for='name') Name:
-            input#email.form-control(type='text', name='name' autocomplete='off' required)
-          div.form-group
-            label(for='birthday') Birthday:
-            input#pw.form-control(type='date' name='birthday' autocomplete='off' required)
-          button.btn.btn-primary(type='submit') Submit
+        div.relative
+            input.form-control(type='text' name='actorName' autocomplete='off' required)
+            span.placeholderLabel Actor Name
+        div.relative
+            input.form-control.date(type='text' name='birthday' autocomplete='off' required)
+            span.placeholderLabel Birthday (M/D/YYYY)
+        button.btn.btn-primary(type='submit') Submit
+        script.
+            var cleave = new Cleave('.date', {
+                date: true,
+                delimiter: '/',
+                datePattern: ['m', 'd', 'Y']
+            });

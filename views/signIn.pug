@@ -4,6 +4,10 @@ block title
 block content
     h2 Sign In
     form.narrow(method='POST' action='/signIn')
-        input#email.form-control(type='email', name='email' placeholder='Email' autocomplete='off' required)
-        input#pw.form-control(type='password' name='password' placeholder='Password' autocomplete='off' required)
+        div.relative
+            input.form-control(type='text' name='email' autocomplete='off' required)
+            span.placeholderLabel Email
+        div.relative
+            input.form-control(type='password' name='password' autocomplete='off' required)
+            span.placeholderLabel Password
         button.btn.btn-primary(type='submit') Sign In

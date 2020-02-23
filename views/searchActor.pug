@@ -4,5 +4,7 @@ block title
 block content
     h2 Search for an Actor
     form.narrow(method='POST' action='/searchActor')
-        input#email.form-control(type='text' name='actorName' placeholder='Actor Name' autocomplete='off' required)
+        div.relative
+            input.form-control(type='text' name='actorName' autocomplete='off' required)
+            span.placeholderLabel Actor Name
         button.btn.btn-primary(type='submit') Search
