@@ -6,11 +6,6 @@ var router = express.Router();
 router.get('/myAccount', function(req, res) {
 
     var connection = mysqlConnection();
-    connection.connect((err) => {
-        if (err) throw err;
-        console.log('Connected!');
-    });
-
 
     connection.query(`SELECT * FROM movies`, function(err, rows, fields) {
         if (err) {

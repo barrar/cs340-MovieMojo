@@ -4,14 +4,7 @@ var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/listMovies', function(req, res) {
-
     var connection = mysqlConnection();
-    connection.connect((err) => {
-        if (err) throw err;
-        console.log('Connected!');
-    });
-
-
     connection.query(`SELECT * FROM movies`, function(err, rows, fields) {
         if (err) {
             console.log(typeof(err));
@@ -31,8 +24,6 @@ router.get('/listMovies', function(req, res) {
                 }
                 movieList.push(movie);
             }
-
-
             res.render('listMovies', { "movieList": movieList });
         }
     });

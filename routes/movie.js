@@ -3,10 +3,8 @@ var moment = require('moment');
 var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
-router.get('/movie/:id', function (req, res) {
+router.get('/movie/:id', function(req, res) {
     var connection = mysqlConnection();
-    connection.connect();
-
     connection.query(`
     SELECT
         movies.name AS movieName,
@@ -18,7 +16,7 @@ router.get('/movie/:id', function (req, res) {
         ON movies.movieID = actorsMovies.movieID
     INNER JOIN actors
         ON actorsMovies.actorID = actors.actorID
-    WHERE movies.movieID = ` + req.params.id, function (err, rows, fields) {
+    WHERE movies.movieID = ` + req.params.id, function(err, rows, fields) {
         var movie;
 
         if (err) {
@@ -40,13 +38,9 @@ router.get('/movie/:id', function (req, res) {
                 'releaseDate': moment(rows[0].releaseDate).format('MMM Do, YYYY'),
                 'actors': actorsList
             }
-            console.log(movie);
-
             res.render('movie', { "movie": movie });
-
         }
     });
-
     connection.end();
 });
 

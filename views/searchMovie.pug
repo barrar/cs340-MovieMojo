@@ -8,3 +8,8 @@ block content
             input.form-control(type='text' name='movieName' autocomplete='off' required)
             span.placeholderLabel Movie Name
         button.btn.btn-primary(type='submit') Search
+    if movieList
+        ul(class='verticalList')
+            for movie in movieList
+                li
+                    a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}

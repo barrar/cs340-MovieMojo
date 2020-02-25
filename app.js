@@ -5,6 +5,9 @@ var requireDir = require('require-dir');
 // app.use can set up routes
 var app = express();
 
+// Set up ability to get form post data
+app.use(express.urlencoded({ extended: true }))
+
 // pug can use this to find files on the filesystem
 app.locals.basedir = '/var/www/moviemojo';
 
