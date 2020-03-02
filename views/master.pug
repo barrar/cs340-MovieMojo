@@ -1,3 +1,4 @@
+doctype html
 html
     head
         title
@@ -38,7 +39,10 @@ html
             li
                 a(href="/myAccount") My Account
             li
-                a(href="/signIn") Sign In
+                if sessionUserID == -1
+                    a(href="/signIn") Sign In
+                else
+                    a(href="/signIn/signOut") Sign Out
             //- Later we can make a conditional to show either "Sign In" or "My account"
             //- https://pugjs.org/language/code.html#unbuffered-code
         block content

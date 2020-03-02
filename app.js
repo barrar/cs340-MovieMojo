@@ -1,9 +1,35 @@
 var express = require('express');
 var requireDir = require('require-dir');
+var session = require('express-session');
+var MemoryStore = require('memorystore')(session);
 
 // Express is the foundation of the app
 // app.use can set up routes
 var app = express();
+
+// Set up session for log in
+app.set('trust proxy', '127.0.0.1');
+app.use(session({
+    cookie: { secure: true, maxAge: 864000000, sameSite: true },
+    store: new MemoryStore({
+        checkPeriod: 864000000 // 10 days
+    }),
+    secret: 'wdNKBP93kO7E8NtWKNWL',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// Set locals for use in pug templates
+app.use((req, res, next) => {
+    if (req.session && req.session.userID) {
+        res.locals.sessionUserID = req.session.userID;
+        res.locals.sessionName = req.session.name;
+        res.locals.sessionEmail = req.session.email;
+    } else {
+        res.locals.sessionUserID = -1;
+    }
+    next();
+});
 
 // Set up ability to get form post data
 app.use(express.urlencoded({ extended: true }))

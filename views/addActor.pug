@@ -5,11 +5,12 @@ block content
     h2 Add Actor
     form.narrow(method='POST' action='/addActor')
         div.relative
-            input.form-control(type='text' name='actorName' autocomplete='off' required)
+            input.form-control(type='text' name='name' autocomplete='off' required)
             span.placeholderLabel Actor Name
         div.relative
             input.form-control.date(type='text' name='birthday' autocomplete='off' required)
-            span.placeholderLabel Birthday (M/D/YYYY)
+            span.placeholderLabel Birthday (MM/DD/YYYY)
+        div.recaptcha !{recaptcha}
         button.btn.btn-primary(type='submit') Submit
         script.
             var cleave = new Cleave('.date', {
@@ -17,3 +18,7 @@ block content
                 delimiter: '/',
                 datePattern: ['m', 'd', 'Y']
             });
+    if status == 1
+        h4 Successfully added
+    if status == 0
+        h4 Error adding data

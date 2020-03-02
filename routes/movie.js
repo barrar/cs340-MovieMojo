@@ -21,24 +21,27 @@ router.get('/movie/:id', function(req, res) {
 
         if (err) {
             console.log(err);
-            res.status(500).json({ "status_code": 500, "status_message": "internal server error" });
+            res.render('error');
         } else {
+            if (rows.length > 0) {
 
-            var actorsList = [];
-            for (var i = 0; i < rows.length; i++) {
-                var actor = {
-                    name: rows[i].actorName,
-                    actorID: rows[i].actorID
-                };
-                actorsList.push(actor);
+                var actorsList = [];
+                for (var i = 0; i < rows.length; i++) {
+                    var actor = {
+                        name: rows[i].actorName,
+                        actorID: rows[i].actorID
+                    };
+                    actorsList.push(actor);
+                }
+                var movie = {
+                    'name': rows[0].movieName,
+                    'releaseDate': moment(rows[0].releaseDate).format('MMM Do, YYYY'),
+                    'actors': actorsList
+                }
+                res.render('movie', { "movie": movie });
+            } else {
+                res.render('error');
             }
-            console.log(actorsList);
-            var movie = {
-                'name': rows[0].movieName,
-                'releaseDate': moment(rows[0].releaseDate).format('MMM Do, YYYY'),
-                'actors': actorsList
-            }
-            res.render('movie', { "movie": movie });
         }
     });
     connection.end();

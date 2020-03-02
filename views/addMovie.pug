@@ -5,11 +5,12 @@ block content
     h2 Add Movie
     form.narrow(method='POST' action='/addMovie')
         div.relative
-            input.form-control(type='text' name='movieName' autocomplete='off' required)
+            input.form-control(type='text' name='name' autocomplete='off' required)
             span.placeholderLabel Movie Name
         div.relative
             input.form-control.date(type='text' name='releaseDate' autocomplete='off' required)
             span.placeholderLabel Release Date (MM/DD/YYYY)
+        div.recaptcha !{recaptcha}
         button.btn.btn-primary(type='submit') Submit
         script.
             var cleave = new Cleave('.date', {
@@ -17,3 +18,7 @@ block content
                 delimiter: '/',
                 datePattern: ['m', 'd', 'Y']
             });
+    if status == 1
+        h4 Successfully added
+    if status == 0
+        h4 Error adding data

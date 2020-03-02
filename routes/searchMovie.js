@@ -13,7 +13,7 @@ router.post('/searchMovie', function(req, res) {
         },
         function(err, rows, fields) {
             if (err) {
-                res.status(500).json({ "status_code": 500, "status_message": "internal server error" });
+                res.render('error');
             } else {
                 var movieList = [];
                 for (var i = 0; i < rows.length; i++) {

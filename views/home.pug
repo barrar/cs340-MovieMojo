@@ -3,6 +3,8 @@ block title
     | MovieMojo
 block content
     h1 Welcome to MovieMojo
+    if sessionName
+        h4(style='color:red') Logged in as: #{sessionName} (#{sessionEmail})
     h4 Here are some of the features this website has to offer:
     ul(class='largeList')
         li Search for movies by name, release date or actor

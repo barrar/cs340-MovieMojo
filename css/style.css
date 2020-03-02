@@ -132,6 +132,10 @@ form.narrow {
     color: #000
 }
 
+.recaptcha {
+    margin: 0 0 15px 1px;
+}
+
 .form-control:focus {
     transition: 0.3s ease all;
     color: #000;

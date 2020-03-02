@@ -21,23 +21,27 @@ router.get('/actor/:id', function(req, res) {
     WHERE actors.actorID = ` + req.params.id, function(err, rows, fields) {
         if (err) {
             console.log(err);
-            res.status(500).json({ "status_code": 500, "status_message": "internal server error" });
+            res.render('error');
         } else {
-            var movieList = [];
-            for (var i = 0; i < rows.length; i++) {
-                var movie = {
-                    name: rows[i].movieName,
-                    releaseDate: moment(rows[i].releaseDate).format('MMM Do, YYYY'),
-                    movieID: rows[i].movieID
-                };
-                movieList.push(movie);
+            if (rows.length > 0) {
+                var movieList = [];
+                for (var i = 0; i < rows.length; i++) {
+                    var movie = {
+                        name: rows[i].movieName,
+                        releaseDate: moment(rows[i].releaseDate).format('MMM Do, YYYY'),
+                        movieID: rows[i].movieID
+                    };
+                    movieList.push(movie);
+                }
+                var actor = {
+                    'name': rows[0].actorName,
+                    'birthday': moment(rows[0].birthday).format('MMM Do, YYYY'),
+                    'movies': movieList
+                }
+                res.render('actor', { "actor": actor });
+            } else {
+                res.render('error');
             }
-            var actor = {
-                'name': rows[0].actorName,
-                'birthday': moment(rows[0].birthday).format('MMM Do, YYYY'),
-                'movies': movieList
-            }
-            res.render('actor', { "actor": actor });
         }
     });
     connection.end();

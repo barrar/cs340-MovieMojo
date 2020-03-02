@@ -7,7 +7,7 @@ router.get('/listActors', function(req, res) {
     var connection = mysqlConnection();
     connection.query(`SELECT * FROM actors`, function(err, rows, fields) {
         if (err) {
-            res.status(500).json({ "status_code": 500, "status_message": "internal server error" });
+            res.render('error');
         } else {
             for (var i = 0; i < rows.length; i++) {
                 rows[i].birthday = moment(rows[i].birthday).format('MMM Do, YYYY');

@@ -9,12 +9,8 @@ router.get('/myAccount', function(req, res) {
 
     connection.query(`SELECT * FROM movies`, function(err, rows, fields) {
         if (err) {
-            console.log(typeof(err));
             console.log(err);
-            for (var k in err) {
-                console.log(`${k}: ${err[k]}`);
-            }
-            res.status(500).json({ "status_code": 500, "status_message": "internal server error" });
+            res.render('error');
         } else {
             var movieList = [];
             for (var i = 0; i < rows.length; i++) {
