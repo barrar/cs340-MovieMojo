@@ -15,7 +15,7 @@ router.post('/searchMovie', function(req, res) {
             if (err) {
                 res.render('error');
             } else {
-                var movieList = [];
+                let movieList = [];
                 for (var i = 0; i < rows.length; i++) {
                     var movie = {
                         'name': rows[i].name,

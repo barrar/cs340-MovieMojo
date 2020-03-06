@@ -1,13 +1,12 @@
-var express = require('express');
-var requireDir = require('require-dir');
-var session = require('express-session');
-var MemoryStore = require('memorystore')(session);
-
 // Express is the foundation of the app
 // app.use can set up routes
+var express = require('express');
 var app = express();
+app.disable('x-powered-by');
 
 // Set up session for log in
+var session = require('express-session');
+var MemoryStore = require('memorystore')(session);
 app.set('trust proxy', '127.0.0.1');
 app.use(session({
     cookie: { secure: true, maxAge: 864000000, sameSite: true },
@@ -73,10 +72,14 @@ app.set('view engine', 'pug');
 // when /actor/1 is loaded that page is rendered using /routes/actor.js
 // This is defined by router.get('/actor/:id', function (req, res) {
 // note that /views/actor.pug is used to render the page from from actor.js
-var routes = requireDir('./routes');
+var routes = require('require-dir')('./routes');
 for (var i in routes) app.use('/', routes[i]);
 
-// Listen on port 80, this requires root
-// A better setup would be some other port like port 3050
-// and then use nginx to proxy requests with https and http2
-app.listen(8001, function() {});
+// To listen on port 80, run as root
+// The live server currently uses nginx to proxy requests
+var server = app.listen(8001, function() {});
+
+// socket.io shares the http server with express
+var io = require('socket.io').listen(server);
+// This file handles the various socket.on('endpointName') calls
+require('./socketEndpoints.js')(io);

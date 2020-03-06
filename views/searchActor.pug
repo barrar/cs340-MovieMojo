@@ -8,3 +8,8 @@ block content
             input.form-control(type='text' name='actorName' autocomplete='off' required)
             span.placeholderLabel Actor Name
         button.btn.btn-primary(type='submit') Search
+    if actorList
+        ul(class='verticalList')
+            for actor in actorList
+                li
+                    a(href='/actor/'+actor.actorID) #{actor.name} - born #{actor.birthday}

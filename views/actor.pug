@@ -8,7 +8,7 @@ block content
     ul(class='verticalList')
         for movie in actor.movies
             li
-                a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+                a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
     div.add
         | This actor is not in your favorites: 
         a(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added to favorites';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);")

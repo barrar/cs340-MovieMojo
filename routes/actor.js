@@ -40,7 +40,7 @@ router.get('/actor/:id', function(req, res) {
                 }
                 res.render('actor', { "actor": actor });
             } else {
-                res.render('error');
+                res.render('error', { "errorMessage": "This actor is not linked to a movie" });
             }
         }
     });

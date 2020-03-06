@@ -12,13 +12,13 @@ block content
             span.placeholderLabel Birthday (MM/DD/YYYY)
         div.recaptcha !{recaptcha}
         button.btn.btn-primary(type='submit') Submit
+        if status == 1
+            h4 Successfully added
+        if status == 0
+            h4 Error adding data
         script.
             var cleave = new Cleave('.date', {
                 date: true,
                 delimiter: '/',
                 datePattern: ['m', 'd', 'Y']
             });
-    if status == 1
-        h4 Successfully added
-    if status == 0
-        h4 Error adding data

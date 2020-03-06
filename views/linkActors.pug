@@ -3,15 +3,71 @@ block title
     | Add Actor
 block content
     h2 Add Actors to a Movie
-    div Make sure you select the correct movie or actor by verifying the name and date.
     div As you type, movies/actors and their associated date will appear below.
-    div Select the movie/actor by clicking on it.
-    div The form will submit the associated IDs and those will be added to the `actorsMovies` table.
-    form.narrow(method='POST' action='/linkActors')
-          div.form-group
+    div Select the movie/actor by clicking on it. This creates a hidden form element with the ID as its value.
+    div The form will submit the IDs and those will be added to the `actorsMovies` table.
+    form.medium(method='POST' action='/linkActors')
+        div.form-group
             label(for='movieName') Movie:
-            input#email.form-control(type='text', name='movieName' placeholder='As you type, movies + release dates will appear below' autocomplete='off' required)
-          div.form-group
-            label(for='actorName') Actors:
-            input#pw.form-control(type='text' name='actorName' placeholder='As you type, actors + birthdays will appear below' autocomplete='off' required)
-          button.btn.btn-primary(type='submit') Add actor to movie
+            input#movieName.form-control(type='text' name='movieName' placeholder='As you type, movies will appear below' autocomplete='off' required)
+        div#movieAutocomplete.autocomplete
+        div.form-group
+            label(for='actorName') Actor:
+            input#actorName.form-control(type='text' name='actorName' placeholder='As you type, actors will appear below' autocomplete='off' required)
+        div#actorAutocomplete.autocomplete
+        div.recaptcha !{recaptcha}
+        button.btn.btn-primary(type='submit') Add actor to movie
+        if status == 1
+            h4 Successfully added
+        if status == 0
+            h4 Error adding data
+    script(src="/socket.io/socket.io.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        $(function () {
+            var socket = io();
+            $('#movieName').on('input', function(e){
+                socket.emit('movie', $('#movieName').val(), function (data) {
+                    console.log(data);
+                    $('#movieAutocomplete').empty();
+                    $.each(data, function(i, item) {
+                        var button = document.createElement('button');
+                        $(button).text(item.text);
+                        $(button).data('movieID', item.movieID);
+                        $(button).data('text', item.text);
+                        $(button).on('click', function(e){
+                            e.preventDefault();
+                            $('#movieName').val($(this).data('text')).prop('disabled', true);
+                            $('<input>', {
+                                type: 'hidden', name: 'movieID', value: $(this).data('movieID')
+                            }).appendTo('form');
+                            $('#movieAutocomplete').empty();
+                        });
+                        $('#movieAutocomplete').append(button);
+                    });
+                });
+                return false;
+            });
+            $('#actorName').on('input', function(e){
+                socket.emit('actor', $('#actorName').val(), function (data) {
+                    console.log(data);
+                    $('#actorAutocomplete').empty();
+                    $.each(data, function(i, item) {
+                        var button = document.createElement('button');
+                        $(button).text(item.text);
+                        $(button).data('actorID', item.actorID);
+                        $(button).data('text', item.text);
+                        $(button).on('click', function(e){
+                            e.preventDefault();
+                            $('#actorName').val($(this).data('text')).prop('disabled', true);
+                            $('<input>', {
+                                type: 'hidden', name: 'actorID', value: $(this).data('actorID')
+                            }).appendTo('form');
+                            $('#actorAutocomplete').empty();
+                        });
+                        $('#actorAutocomplete').append(button);
+                    });
+                });
+                return false;
+            });
+        });

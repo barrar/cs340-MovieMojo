@@ -6,20 +6,20 @@ block content
     h4 Watched Movies
     ul(class='verticalListSectioned')
         li
-            a(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - Released on #{movieList[0].releaseDate}
+            a(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - released #{movieList[0].releaseDate}
             button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
         //- for movie in movieList
         //-     li
-        //-         a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+        //-         a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
         //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
     h4 Watch Later
     ul(class='verticalListSectioned')
         li
-            a(href='/movie/'+movieList[1].movieID) #{movieList[1].name} - Released on #{movieList[1].releaseDate}
+            a(href='/movie/'+movieList[1].movieID) #{movieList[1].name} - released #{movieList[1].releaseDate}
             button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
         //- for movie in movieList
         //-     li
-        //-         a(href='/movie/'+movie.movieID) #{movie.name} - Released on #{movie.releaseDate}
+        //-         a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
         //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
     h4 Favorite Actors
     ul(class='verticalListSectioned')
@@ -33,7 +33,7 @@ block content
     ul(class='verticalListSectioned')
         li
             span.ratingView 8
-            a.ratingView(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - Released on #{movieList[0].releaseDate}
+            a.ratingView(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - released #{movieList[0].releaseDate}
             button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
     h4 Change Password
     form.narrow(method='POST' action='/myAccount')
