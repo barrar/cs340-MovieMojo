@@ -5,6 +5,7 @@ block content
     h1 Welcome to MovieMojo
     if sessionName
         h4(style='color:red') Logged in as: #{sessionName} (#{sessionEmail})
+    h4 Google Chrome is the officially supported browser for this website
     h4 Here are some of the features this website has to offer:
     ul(class='largeList')
         li Deter spam bots with reCAPTCHA
@@ -15,9 +16,9 @@ block content
         li Create a user account and log in
         li See movie details by clicking a movie name from the actor details page
         li See actor details and the movies they were in by clicking their name on the movie details page
-    h4 These features are in progress
-    ul(class='largeList')
         li Assign a rating to a movie
+    h4 These features are in progress:
+    ul(class='largeList')
         li Delete ratings
         li Update ratings
         li View ratings on movie details page

@@ -1,12 +1,12 @@
 var express = require('express');
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/movie/:id', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query(`
+
+    mysqlPool.query(`
     SELECT
+        movies.movieID AS movieID,
         movies.name AS movieName,
         movies.releaseDate,
         actors.name AS actorName,
@@ -34,6 +34,7 @@ router.get('/movie/:id', function(req, res) {
                     actorsList.push(actor);
                 }
                 var movie = {
+                    'movieID': rows[0].movieID,
                     'name': rows[0].movieName,
                     'releaseDate': moment(rows[0].releaseDate).format('MMM Do, YYYY'),
                     'actors': actorsList
@@ -44,7 +45,7 @@ router.get('/movie/:id', function(req, res) {
             }
         }
     });
-    connection.end();
+
 });
 
 module.exports = router;

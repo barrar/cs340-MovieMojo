@@ -1,18 +1,17 @@
 var router = require('express').Router();
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 
 router.get('/searchMovie', function(req, res) {
     res.render('searchMovie');
 });
 
 router.post('/searchMovie', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query('SELECT * FROM movies WHERE movies.name LIKE :%movieName%', {
+    mysqlPool.query('SELECT * FROM movies WHERE movies.name LIKE :%movieName%', {
             movieName: req.body.movieName
         },
         function(err, rows, fields) {
             if (err) {
+                console.log(err);
                 res.render('error');
             } else {
                 let movieList = [];
@@ -27,8 +26,6 @@ router.post('/searchMovie', function(req, res) {
                 res.render('searchMovie', { "movieList": movieList });
             }
         });
-
-    connection.end();
 });
 
 module.exports = router;

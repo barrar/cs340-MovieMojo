@@ -1,11 +1,10 @@
 var express = require('express');
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/listMovies', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query(`SELECT * FROM movies`, function(err, rows, fields) {
+
+    mysqlPool.query(`SELECT * FROM movies`, function(err, rows, fields) {
         if (err) {
             console.log(err);
             res.render('error');
@@ -23,7 +22,7 @@ router.get('/listMovies', function(req, res) {
             res.render('listMovies', { "movieList": movieList });
         }
     });
-    connection.end();
+
 
 });
 

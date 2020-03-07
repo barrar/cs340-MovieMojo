@@ -15,7 +15,7 @@ block content
     form.rating
         div Rating:
         fieldset
-            span.ratingPicker(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Rating Saved';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);")
+            span.ratingPicker
                 <input type="radio" id="r1" name="rating" value="1" /><label for="r1">1</label>
                 <input type="radio" id="r2" name="rating" value="2" /><label for="r2">2</label>
                 <input type="radio" id="r3" name="rating" value="3" /><label for="r3">3</label>
@@ -26,4 +26,33 @@ block content
                 <input type="radio" id="r8" name="rating" value="8" /><label for="r8">8</label>
                 <input type="radio" id="r9" name="rating" value="9" /><label for="r9">9</label>
                 <input type="radio" id="r10" name="rating" value="10" /><label for="r10">10</label>
-    div#status(style='font-weight:bold;font-size:30px')
+    div Rating are automatically saved and will show up on a page reload
+    div#status(style='font-weight:bold;font-size:22px')
+
+    script(src="/socket.io/socket.io.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        $(function () {
+            var socket = io();
+            if (#{sessionUserID} >= 0){
+                socket.emit('getRating',
+                    {
+                        userID: #{sessionUserID},
+                        movieID: #{movie.movieID},
+                    },
+                    function (data) {
+                        $('.ratingPicker input[value=' + data + ']').prop('checked', true );
+                });
+            }
+            $('.ratingPicker input').on('click', function(e){
+                socket.emit('setRating',
+                    {
+                        userID: #{sessionUserID},
+                        movieID: #{movie.movieID},
+                        rating: $(this).val()
+                    },
+                    function (data) {
+                        $('#status').text(data)
+                });
+            });
+        });

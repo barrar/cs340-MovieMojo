@@ -1,11 +1,9 @@
 var moment = require('moment');
-var mysqlConnection = require('./mysqlConnection');
 
 module.exports = function(io) {
     io.on('connection', function(socket) {
         socket.on('movie', function(searchTerm, fn) {
-            var connection = mysqlConnection();
-            q = connection.query('SELECT * FROM movies WHERE movies.name LIKE :%movieName%', {
+            mysqlPool.query('SELECT * FROM movies WHERE movies.name LIKE :%movieName%', {
                     movieName: searchTerm
                 },
                 function(err, rows, fields) {
@@ -21,11 +19,9 @@ module.exports = function(io) {
                     }
                     fn(movieList);
                 });
-            connection.end();
         });
         socket.on('actor', function(searchTerm, fn) {
-            var connection = mysqlConnection();
-            q = connection.query('SELECT * FROM actors WHERE actors.name LIKE :%actorName%', {
+            mysqlPool.query('SELECT * FROM actors WHERE actors.name LIKE :%actorName%', {
                     actorName: searchTerm
                 },
                 function(err, rows, fields) {
@@ -41,7 +37,33 @@ module.exports = function(io) {
                     }
                     fn(actorList);
                 });
-            connection.end();
+        });
+        socket.on('setRating', function(data, fn) {
+            console.log(data);
+            mysqlPool.query(`
+                INSERT INTO usersMovies VALUES (:userID, :movieID, :rating, 1)
+                ON DUPLICATE KEY UPDATE
+                rating = :rating`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem saving your rating. Are you logged in?');
+                    } else {
+                        fn('Rating Saved');
+                    }
+                });
+        });
+        socket.on('getRating', function(data, fn) {
+            mysqlPool.query(`
+                SELECT rating
+                FROM usersMovies
+                WHERE userID = :userID AND movieID = :movieID`,
+                data,
+                function(err, rows, fields) {
+                    if (!err && rows.length > 0) {
+                        fn(rows[0].rating);
+                    }
+                });
         });
     });
 }

@@ -1,11 +1,9 @@
 var express = require('express');
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/listActors', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query(`SELECT * FROM actors`, function(err, rows, fields) {
+    mysqlPool.query(`SELECT * FROM actors`, function(err, rows, fields) {
         if (err) {
             res.render('error');
         } else {
@@ -15,7 +13,6 @@ router.get('/listActors', function(req, res) {
             res.render('listActors', { "actorList": rows });
         }
     });
-    connection.end();
 });
 
 module.exports = router;

@@ -1,5 +1,4 @@
 var express = require('express');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 var recaptcha = require('../recaptcha');
 
@@ -11,8 +10,8 @@ router.post('/signIn', recaptcha.middleware.render, recaptcha.middleware.verify,
     if (req.recaptcha.error) {
         res.render('signIn', { "recaptcha": res.recaptcha, "status": 0 });
     } else {
-        var connection = mysqlConnection();
-        connection.query(
+
+        mysqlPool.query(
             `SELECT * FROM moviemojo.users
         WHERE email=:email and password=:password;`,
             req.body,
@@ -31,7 +30,7 @@ router.post('/signIn', recaptcha.middleware.render, recaptcha.middleware.verify,
                     res.render('signIn', { "recaptcha": res.recaptcha, "status": 0 });
                 }
             });
-        connection.end();
+
     }
 });
 

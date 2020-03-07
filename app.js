@@ -3,20 +3,67 @@
 var express = require('express');
 var app = express();
 app.disable('x-powered-by');
+app.set('trust proxy', 1);
 
-// Set up session for log in
+// Set up mysql
+var mysql = require('mysql');
+// This function looks inside a query and inserts escaped variable values with optional wildcard characters
+// :%variableName% becomes '%variableValue%'
+// :variableName becomes 'variableValue'
+// :_____variableName% becomes '_____variableValue%'
+// These are standard SQL wildcard characters
+// query('SELECT * FROM movies WHERE movies.name LIKE :%searchTerm%', { searchTerm: req.body.searchTerm }, ...
+// becomes `SELECT * FROM movies WHERE movies.name LIKE '%keyword%'`
+functionQueryFormat = function(query, values) {
+    if (!values) return query;
+    return query.replace(/\:(%|_+)?(\w+)(%|_+)?/g, function(txt, prefix = '', key, suffix = '') {
+        if (values.hasOwnProperty(key)) {
+            return this.escape(prefix + values[key] + suffix);
+        }
+        return txt;
+    }.bind(this));
+};
+
+// A pool of connections is established and reused
+global.mysqlPool = mysql.createPool({
+    connectionLimit: 8,
+    host: 'localhost',
+    user: 'moviemojo',
+    password: 'beta12',
+    database: 'moviemojo',
+    queryFormat: functionQueryFormat
+});
+
+// Session gets it's own pool due to the special queryFormat
+// The queryFormat function should be fixed so it's compatible
+mysqlSessionPool = mysql.createPool({
+    connectionLimit: 1,
+    host: 'localhost',
+    user: 'moviemojo',
+    password: 'beta12',
+    database: 'moviemojo',
+});
 var session = require('express-session');
-var MemoryStore = require('memorystore')(session);
-app.set('trust proxy', '127.0.0.1');
+var MySQLStore = require('express-mysql-session')(session);
+var sessionStore = new MySQLStore({ expiration: 864000000 }, mysqlSessionPool);
 app.use(session({
     cookie: { secure: true, maxAge: 864000000, sameSite: true },
-    store: new MemoryStore({
-        checkPeriod: 864000000 // 10 days
-    }),
-    secret: 'wdNKBP93kO7E8NtWKNWL',
+    key: 'session_mysql',
+    secret: 'wdNKBP93E8NtW123KNWL',
+    store: sessionStore,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false
 }));
+// var MemoryStore = require('memorystore')(session);
+// app.use(session({
+//     cookie: { secure: true, maxAge: 864000000, sameSite: true },
+//     store: new MemoryStore({
+//         checkPeriod: 864000000 // 10 days
+//     }),
+//     secret: 'wdNKBP93kO7E8NtWKNWL',
+//     resave: false,
+//     saveUninitialized: true
+// }));
 
 // Set locals for use in pug templates
 app.use((req, res, next) => {
@@ -36,7 +83,7 @@ app.use(express.urlencoded({ extended: true }))
 // pug can use this to find files on the filesystem
 app.locals.basedir = '/var/www/moviemojo';
 
-// Static assests are served directly using express.static()
+// Static assets are served directly using express.static()
 // These can be served faster with nginx directly
 app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));

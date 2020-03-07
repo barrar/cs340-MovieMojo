@@ -25,22 +25,6 @@ button {
     background: inherit;
 }
 
-a:hover,
-button:hover {
-    background: #02aec7;
-    text-decoration: none;
-    color: #000;
-}
-
-button {
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-control:disabled {
-    background: #02aec7;
-}
-
 
 /* content */
 
@@ -127,6 +111,10 @@ a.ratingView {
     margin-right: 0;
 }
 
+.error {
+    color: #F00;
+}
+
 
 /* forms */
 
@@ -151,6 +139,22 @@ form.medium {
 
 .recaptcha {
     margin: 0 0 15px 1px;
+}
+
+a:hover,
+button:hover {
+    background: #02aec7;
+    text-decoration: none;
+    color: #000;
+}
+
+button {
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control:disabled {
+    background: #02aec7;
 }
 
 .form-control:focus {

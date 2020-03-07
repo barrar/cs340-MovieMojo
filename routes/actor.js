@@ -1,11 +1,10 @@
 var express = require('express');
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/actor/:id', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query(`
+
+    mysqlPool.query(`
     SELECT
         movies.name AS movieName,
         movies.movieID,
@@ -44,7 +43,7 @@ router.get('/actor/:id', function(req, res) {
             }
         }
     });
-    connection.end();
+
 });
 
 module.exports = router;

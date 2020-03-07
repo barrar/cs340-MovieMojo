@@ -1,6 +1,5 @@
 var express = require('express');
 var moment = require('moment');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 
 router.get('/searchActor', function(req, res) {
@@ -8,8 +7,8 @@ router.get('/searchActor', function(req, res) {
 });
 
 router.post('/searchActor', function(req, res) {
-    var connection = mysqlConnection();
-    connection.query('SELECT * FROM actors WHERE actors.name LIKE :%actorName%', {
+
+    mysqlPool.query('SELECT * FROM actors WHERE actors.name LIKE :%actorName%', {
             actorName: req.body.actorName
         },
         function(err, rows, fields) {
@@ -29,7 +28,7 @@ router.post('/searchActor', function(req, res) {
             }
         });
 
-    connection.end();
+
 });
 
 module.exports = router;

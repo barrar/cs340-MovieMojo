@@ -1,5 +1,4 @@
 var express = require('express');
-var mysqlConnection = require('../mysqlConnection');
 var router = express.Router();
 var recaptcha = require('../recaptcha');
 
@@ -12,8 +11,8 @@ router.post('/createAccount', recaptcha.middleware.render, recaptcha.middleware.
         res.render('createAccount', { "recaptcha": res.recaptcha, "status": 0 });
 
     } else {
-        var connection = mysqlConnection();
-        connection.query(
+
+        mysqlPool.query(
             `INSERT INTO users (name, email, password) VALUES (:name, :email, :password)`,
             req.body,
             function(err, rows, fields) {
@@ -24,7 +23,7 @@ router.post('/createAccount', recaptcha.middleware.render, recaptcha.middleware.
                 res.redirect('/signIn');
             });
 
-        connection.end();
+
     }
 });
 
