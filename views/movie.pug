@@ -16,17 +16,10 @@ block content
         div Rating:
         fieldset
             span.ratingPicker
-                <input type="radio" id="r1" name="rating" value="1" /><label for="r1">1</label>
-                <input type="radio" id="r2" name="rating" value="2" /><label for="r2">2</label>
-                <input type="radio" id="r3" name="rating" value="3" /><label for="r3">3</label>
-                <input type="radio" id="r4" name="rating" value="4" /><label for="r4">4</label>
-                <input type="radio" id="r5" name="rating" value="5" /><label for="r5">5</label>
-                <input type="radio" id="r6" name="rating" value="6" /><label for="r6">6</label>
-                <input type="radio" id="r7" name="rating" value="7" /><label for="r7">7</label>
-                <input type="radio" id="r8" name="rating" value="8" /><label for="r8">8</label>
-                <input type="radio" id="r9" name="rating" value="9" /><label for="r9">9</label>
-                <input type="radio" id="r10" name="rating" value="10" /><label for="r10">10</label>
-    div Rating are automatically saved and will show up on a page reload
+                each i in [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10]
+                    input(type="radio" id='r' + i name="rating" value=i checked=(i == movie.rating))
+                    label(for='r' + i) #{i}
+    div Ratings are automatically saved and will show up on a page reload
     div#status(style='font-weight:bold;font-size:22px')
 
     script(src="/socket.io/socket.io.js")
@@ -34,16 +27,6 @@ block content
     script.
         $(function () {
             var socket = io();
-            if (#{sessionUserID} >= 0){
-                socket.emit('getRating',
-                    {
-                        userID: #{sessionUserID},
-                        movieID: #{movie.movieID},
-                    },
-                    function (data) {
-                        $('.ratingPicker input[value=' + data + ']').prop('checked', true );
-                });
-            }
             $('.ratingPicker input').on('click', function(e){
                 socket.emit('setRating',
                     {

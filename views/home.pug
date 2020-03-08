@@ -5,7 +5,7 @@ block content
     h1 Welcome to MovieMojo
     if sessionName
         h4(style='color:red') Logged in as: #{sessionName} (#{sessionEmail})
-    h4 Google Chrome is the officially supported browser for this website
+    h4 This website was only tested with Google Chrome
     h4 Here are some of the features this website has to offer:
     ul(class='largeList')
         li Deter spam bots with reCAPTCHA
@@ -16,14 +16,37 @@ block content
         li Create a user account and log in
         li See movie details by clicking a movie name from the actor details page
         li See actor details and the movies they were in by clicking their name on the movie details page
-        li Assign a rating to a movie
+        li Assign a rating to a movie, update ratings
     h4 These features are in progress:
     ul(class='largeList')
         li Delete ratings
-        li Update ratings
-        li View ratings on movie details page
+        li View all user ratings on movie details page
         li Add a movie to watched list or watch later list
         li Delete movies from watched list or watch later list
         li Update account password
         li Add favorite actors to your account
         li Delete favorite actors from your account
+    h4 Supporting technologies
+    ul(class='largeList')
+        li Ubuntu 19.10 on Azure as VM
+        li Node 12.15.0 LTS as main app engine
+        li pm2 4.2.3 as node process manager
+        li Nginx as proxy
+        ul.listLevel2
+            li http2 for performance
+            li Let's Encrypt for TLS encryption
+            li Serves static content directly from file system
+        li MySQL 8.0.19 as database for all data and session storage
+    h4 Node packages
+    ul(class='largeList')
+        li browser-sync 2.26.7
+        li connect-browser-sync 2.1.0
+        li express 4.17.1
+        li express-mysql-session 2.1.3
+        li express-recaptcha 5.0.1
+        li express-session 1.17.0
+        li moment 2.24.0
+        li mysql 2.18.1
+        li pug 2.0.4
+        li require-dir 1.2.0
+        li socket.io 2.3.0

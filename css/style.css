@@ -81,6 +81,10 @@ li {
     margin-left: 30px;
 }
 
+ul.listLevel2 {
+    margin-left: 30px;
+}
+
 .btnDelete {
     background: #ff3a3a;
     margin: -2px 0 0 0;

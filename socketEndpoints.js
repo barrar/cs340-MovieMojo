@@ -53,17 +53,17 @@ module.exports = function(io) {
                     }
                 });
         });
-        socket.on('getRating', function(data, fn) {
-            mysqlPool.query(`
-                SELECT rating
-                FROM usersMovies
-                WHERE userID = :userID AND movieID = :movieID`,
-                data,
-                function(err, rows, fields) {
-                    if (!err && rows.length > 0) {
-                        fn(rows[0].rating);
-                    }
-                });
-        });
+        // socket.on('getRating', function(data, fn) {
+        //     mysqlPool.query(`
+        //         SELECT rating
+        //         FROM usersMovies
+        //         WHERE userID = :userID AND movieID = :movieID`,
+        //         data,
+        //         function(err, rows, fields) {
+        //             if (!err && rows.length > 0) {
+        //                 fn(rows[0].rating);
+        //             }
+        //         });
+        // });
     });
 }
