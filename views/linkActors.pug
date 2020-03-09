@@ -29,7 +29,7 @@ block content
         $(function () {
             var socket = io();
             $('#movieName').on('input', function(e){
-                socket.emit('movie', $('#movieName').val(), function (data) {
+                socket.emit('movie', $('#movieName').val(), 3, function (data) {
                     console.log(data);
                     $('#movieAutocomplete').empty();
                     $.each(data, function(i, item) {
@@ -51,7 +51,7 @@ block content
                 return false;
             });
             $('#actorName').on('input', function(e){
-                socket.emit('actor', $('#actorName').val(), function (data) {
+                socket.emit('actor', $('#actorName').val(), 3, function (data) {
                     console.log(data);
                     $('#actorAutocomplete').empty();
                     $.each(data, function(i, item) {

@@ -263,7 +263,7 @@ fieldset {
 
 #logo {
     margin-top: 5px;
-    height: 36px;
+    height: 38px;
 }
 
 .nav .dropdown {
@@ -326,6 +326,7 @@ fieldset {
 
 .nav ul {
     display: none;
+    z-index: 999;
 }
 
 .nav li:hover>ul {

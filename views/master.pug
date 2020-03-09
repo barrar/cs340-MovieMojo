@@ -5,24 +5,17 @@ html
             block title
         link(rel='icon', type='image/png', href='/media/icon.png')
         link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Roboto&display=swap')
-        link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css')
-        script(src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.3/cleave.min.js" async)
+        link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css')
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.7/cleave.min.js")
         link(rel='stylesheet', href='/css/style.css?v=2')
     body
     div(class='container')
         a(class="imgLink" href="/"): img(id='logo' src='/media/logo.png')
         ul(class='nav')
             li
-                a(href="/listMovies") All Movies
+                a(href="/movies") Movies
             li
-                a(href="/listActors") All Actors
-            li
-                span(class="dropdown") Search...
-                ul
-                    li
-                        a(href="/searchMovie") for a Movie
-                    li
-                        a(href="/searchActor") for an Actor
+                a(href="/actors") Actors
             li
                 span(class="dropdown") Add...
                 ul
@@ -42,6 +35,4 @@ html
                     a(href="/signIn") Sign In
                 else
                     a(href="/signIn/signOut") Sign Out
-            //- Later we can make a conditional to show either "Sign In" or "My account"
-            //- https://pugjs.org/language/code.html#unbuffered-code
         block content

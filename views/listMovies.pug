@@ -1,9 +1,0 @@
-extends master.pug
-block title
-    | Movie List
-block content
-    h1= 'List of Movies'
-    ul(class='verticalList')
-        for movie in movieList
-            li
-                a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}

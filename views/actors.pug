@@ -1,0 +1,33 @@
+extends master.pug
+block title
+    | Actors
+block content
+    h2 Find an Actor
+    div The search box sends data to a websocket endpoint that runs a real SQL query and returns results
+    form.narrow
+        div.relative
+            input#actorName.form-control(type='text' name='actorName' autocomplete='off' required)
+            span.placeholderLabel Actor Name
+    ul#results(class='verticalList')
+    script(src="/socket.io/socket.io.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        $(function () {
+            $('form').submit(false);
+            var socket = io();
+            $('#actorName').on('input', function(e){
+                // TODO: Add paging
+                socket.emit('actor', $('#actorName').val(), 200, function (data) {
+                    $('#results').empty();
+                    $.each(data, function(i, data) {
+                        var li = document.createElement('li');
+                        var a = document.createElement('a');
+                        $(a).attr('href', '/actor/' + data.actorID );
+                        $(a).text(data.text);
+                        $(li).append(a);
+                        $('#results').append(li);
+                    });
+                });
+            });
+            $('#actorName').trigger('input');
+        });

@@ -1,0 +1,33 @@
+extends master.pug
+block title
+    | Movies
+block content
+    h2 Find a Movie
+    div The search box sends data to a websocket endpoint that runs a real SQL query and returns results
+    form.narrow
+        div.relative
+            input#movieName.form-control(type='text' name='movieName' autocomplete='off' required)
+            span.placeholderLabel Movie Name
+    ul#results(class='verticalList')
+    script(src="/socket.io/socket.io.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        $(function () {
+            $('form').submit(false);
+            var socket = io();
+            $('#movieName').on('input', function(e){
+                // TODO: Add paging
+                socket.emit('movie', $('#movieName').val(), 200, function (data) {
+                    $('#results').empty();
+                    $.each(data, function(i, data) {
+                        var li = document.createElement('li');
+                        var a = document.createElement('a');
+                        $(a).attr('href', '/movie/' + data.movieID );
+                        $(a).text(data.text);
+                        $(li).append(a);
+                        $('#results').append(li);
+                    });
+                });
+            });
+            $('#movieName').trigger('input');
+        });
