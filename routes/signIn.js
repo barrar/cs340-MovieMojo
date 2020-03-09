@@ -1,5 +1,4 @@
-var express = require('express');
-var router = express.Router();
+var router = require('express').Router();
 var recaptcha = require('../recaptcha');
 
 router.get('/signIn', recaptcha.middleware.render, function(req, res) {

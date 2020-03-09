@@ -31,7 +31,8 @@ global.mysqlPool = mysql.createPool({
     user: 'moviemojo',
     password: 'beta12',
     database: 'moviemojo',
-    queryFormat: functionQueryFormat
+    queryFormat: functionQueryFormat,
+    multipleStatements: true
 });
 
 // Session gets it's own pool due to the special queryFormat

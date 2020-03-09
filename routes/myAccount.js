@@ -1,6 +1,5 @@
-var express = require('express');
+var router = require('express').Router();
 var moment = require('moment');
-var router = express.Router();
 
 router.get('/myAccount', function(req, res) {
 

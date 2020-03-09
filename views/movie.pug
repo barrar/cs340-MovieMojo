@@ -17,11 +17,15 @@ block content
         fieldset
             span.ratingPicker
                 each i in [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10]
-                    input(type="radio" id='r' + i name="rating" value=i checked=(i == movie.rating))
+                    input(type="radio" id='r' + i name="rating" value=i checked=(i == movie.userRating))
                     label(for='r' + i) #{i}
     div Ratings are automatically saved and will show up on a page reload
     div#status(style='font-weight:bold;font-size:22px')
-
+    h4 User Ratings
+    div Average rating: #{movie.averageRating}
+    ul(class='verticalList')
+    for rating in movie.ratings
+        li #{rating.rating}/10 - #{rating.name}
     script(src="/socket.io/socket.io.js")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
