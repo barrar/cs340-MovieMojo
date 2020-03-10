@@ -9,6 +9,8 @@ block content
             input#movieName.form-control(type='text' name='movieName' autocomplete='off' required)
             span.placeholderLabel Movie Name
     ul#results(class='verticalList')
+        for movie in movieList
+            li: a(href='/movie/'+movie.movieID) #{movie.text}
     script(src="/socket.io/socket.io.js")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
@@ -29,5 +31,4 @@ block content
                     });
                 });
             });
-            $('#movieName').trigger('input');
         });

@@ -9,6 +9,8 @@ block content
             input#actorName.form-control(type='text' name='actorName' autocomplete='off' required)
             span.placeholderLabel Actor Name
     ul#results(class='verticalList')
+        for actor in actorList
+            li: a(href='actor/'+actor.actorID) #{actor.name} - born #{actor.birthday}
     script(src="/socket.io/socket.io.js")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
@@ -29,5 +31,4 @@ block content
                     });
                 });
             });
-            $('#actorName').trigger('input');
         });
