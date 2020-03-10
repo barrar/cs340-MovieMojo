@@ -16,17 +16,18 @@ var mysql = require('mysql');
 // becomes `SELECT * FROM movies WHERE movies.name LIKE '%keyword%'`
 functionQueryFormat = function(query, values) {
     if (!values) return query;
-    return query.replace(/\:(%|_+)?(\w+)(%|_+)?/g, function(txt, prefix = '', key, suffix = '') {
-        if (values.hasOwnProperty(key)) {
-            return this.escape(prefix + values[key] + suffix);
-        }
-        return txt;
-    }.bind(this));
+    return query.replace(/\:(%|_+)?(\w+)(%|_+)?/g,
+        function(txt, prefix = '', key, suffix = '') {
+            if (values.hasOwnProperty(key)) {
+                return this.escape(prefix + values[key] + suffix);
+            }
+            return txt;
+        }.bind(this));
 };
 
 // A pool of connections is established and reused
 global.mysqlPool = mysql.createPool({
-    connectionLimit: 8,
+    connectionLimit: 3,
     host: 'localhost',
     user: 'moviemojo',
     password: 'beta12',
@@ -38,7 +39,7 @@ global.mysqlPool = mysql.createPool({
 // Session gets it's own pool due to the special queryFormat
 // The queryFormat function should be fixed so it's compatible
 mysqlSessionPool = mysql.createPool({
-    connectionLimit: 1,
+    connectionLimit: 3,
     host: 'localhost',
     user: 'moviemojo',
     password: 'beta12',
@@ -46,7 +47,7 @@ mysqlSessionPool = mysql.createPool({
 });
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
-var sessionStore = new MySQLStore({ expiration: 864000000 }, mysqlSessionPool);
+global.sessionStore = new MySQLStore({ expiration: 864000000 }, mysqlSessionPool);
 app.use(session({
     cookie: { secure: true, maxAge: 864000000, sameSite: true },
     key: 'session_mysql',

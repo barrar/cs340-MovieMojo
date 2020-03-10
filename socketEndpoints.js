@@ -1,7 +1,16 @@
 var moment = require('moment');
+var cookie = require('cookie');
+
 
 module.exports = function(io) {
     io.on('connection', function(socket) {
+        // let stringSession = cookie.parse(socket.request.headers.cookie).session_mysql.split('.')[0].split(':')[1];
+        // let userID = -1
+        // sessionStore.get(stringSession, function(error, session) {
+        //     userID = session.userID
+        //     console.log(userID);
+
+        // });
         socket.on('movie', function(searchTerm, max, fn) {
             mysqlPool.query('SELECT * FROM movies WHERE movies.name LIKE :%movieName%', {
                     movieName: searchTerm
@@ -38,8 +47,23 @@ module.exports = function(io) {
                     fn(actorList);
                 });
         });
-        socket.on('setRating', function(data, fn) {
+        socket.on('setList', function(data, fn) {
             console.log(data);
+            mysqlPool.query(`
+                INSERT INTO usersMovies VALUES (:userID, :movieID, NULL, :watched)
+                ON DUPLICATE KEY UPDATE
+                watched = :watched`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem saving to your list. Are you logged in?');
+                    } else {
+                        listName = data.watched ? "watched" : "watch later"
+                        fn('Saved to your ' + listName + ' list');
+                    }
+                });
+        });
+        socket.on('setRating', function(data, fn) {
             mysqlPool.query(`
                 INSERT INTO usersMovies VALUES (:userID, :movieID, :rating, 1)
                 ON DUPLICATE KEY UPDATE

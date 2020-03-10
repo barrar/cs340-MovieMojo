@@ -9,18 +9,17 @@ block content
             li
                 a(href='/actor/'+actor.actorID) #{actor.name}
     div.add
-        div This movie is not on your list: 
-        a(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") I watched this
-        a(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added to watch later';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Add to watch later
+        h4#list This movie is not on your list: 
+        button(onclick="addToWatched(1)") Add to watched list
+        button(onclick="addToWatched(0)") Add to watch later list
     form.rating
-        div Rating:
+        h4#ratingStatus Rating:
+        div Ratings are automatically saved and will show up on a page reload
         fieldset
             span.ratingPicker
                 each i in [1, 2, 3, 4, 5, 6, 7, 8 , 9, 10]
                     input(type="radio" id='r' + i name="rating" value=i checked=(i == movie.userRating))
                     label(for='r' + i) #{i}
-    div Ratings are automatically saved and will show up on a page reload
-    div#status(style='font-weight:bold;font-size:22px')
     h4 User Ratings
     div Average rating: #{movie.averageRating}
     ul(class='verticalList')
@@ -29,17 +28,27 @@ block content
     script(src="/socket.io/socket.io.js")
     script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
     script.
-        $(function () {
-            var socket = io();
-            $('.ratingPicker input').on('click', function(e){
-                socket.emit('setRating',
-                    {
-                        userID: #{sessionUserID},
-                        movieID: #{movie.movieID},
-                        rating: $(this).val()
-                    },
-                    function (data) {
-                        $('#status').text(data)
-                });
+        var socket = io();
+        $('.ratingPicker input').on('click', function(e){
+            socket.emit('setRating',
+                {
+                    userID: #{sessionUserID},
+                    movieID: #{movie.movieID},
+                    rating: $(this).val()
+                },
+                function (data) {
+                    $('#ratingStatus').text(data)
             });
         });
+        function addToWatched(watched){
+            socket.emit('setList',
+                {
+                    userID: #{sessionUserID},
+                    movieID: #{movie.movieID},
+                    watched: watched
+                },
+                function (data) {
+                    $('#list').text(data)
+            });
+        }
+            
