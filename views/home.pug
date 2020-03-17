@@ -5,7 +5,7 @@ block content
     h1 Welcome to MovieMojo
     if sessionName
         h4(style='color:red') Logged in as: #{sessionName} (#{sessionEmail})
-    h4 This website was only tested with Google Chrome
+    h4.red Please use Google Chrome
     h4 Here are some of the features this website has to offer:
     ul(class='largeList')
         li Deter spam bots with reCAPTCHA
@@ -28,7 +28,8 @@ block content
         li Delete favorite actors from your account
     h4 Supporting technologies
     ul(class='largeList')
-        li Ubuntu 19.10 on Azure as VM
+        li Ubuntu 19.10 VM on Azure as OS
+        li MySQL 8.0.19 as database for all data and session storage
         li Node 12.15.0 LTS as main app engine
         li pm2 4.2.3 as node process manager
         li Nginx as proxy
@@ -36,7 +37,6 @@ block content
             li http2 for performance
             li Let's Encrypt for TLS encryption
             li Serves static content directly from file system
-        li MySQL 8.0.19 as database for all data and session storage
     h4 Node packages
     ul(class='largeList')
         li browser-sync 2.26.7

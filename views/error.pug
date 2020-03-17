@@ -2,9 +2,8 @@ extends master.pug
 block title
     | MovieMojo
 block content
+    h1.red Server Error
     if errorMessage
-        h1 Server Error
-        h4 #{errorMessage}
+        h4.red #{errorMessage}
     else
-        h1 Server Error
-        h4 Please try again, or review the server log
+        h4.red Please try again, or review the server log
