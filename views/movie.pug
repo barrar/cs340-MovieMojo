@@ -9,7 +9,7 @@ block content
             li
                 a(href='/actor/'+actor.actorID) #{actor.name}
     div.add
-        h4#list This movie is not on your list: 
+        h4#list Add movie to list: 
         button(onclick="addToWatched(1)") Add to watched list
         button(onclick="addToWatched(0)") Add to watch later list
     form.rating
@@ -51,4 +51,3 @@ block content
                     $('#list').text(data)
             });
         }
-            

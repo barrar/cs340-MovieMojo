@@ -375,11 +375,8 @@ fieldset {
 }
 
 .shake {
-    font-size: 2em;
-    width: fit-content;
-    margin: auto;
     color: red;
-    animation: shake .5s .5s forwards;
+    animation: shake .6s .5s forwards;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     perspective: 1000px;

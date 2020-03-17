@@ -5,7 +5,7 @@ block content
     h1 Welcome to MovieMojo
     if sessionName
         h4(style='color:red') Logged in as: #{sessionName} (#{sessionEmail})
-    h4.red Please use Google Chrome
+    h4.shake Please use Google Chrome
     h4 Here are some of the features this website has to offer:
     ul(class='largeList')
         li Deter spam bots with reCAPTCHA
@@ -19,13 +19,11 @@ block content
         li Assign a rating to a movie, update ratings
         li View all user ratings on movie details page
         li Add a movie to watched list or watch later list
-    h4 These features are in progress:
-    ul(class='largeList')
         li Delete ratings
         li Delete movies from watched list or watch later list
         li Update account password
-        li Add favorite actors to your account
-        li Delete favorite actors from your account
+        li Add a favorite actor to your account
+        li Delete your favorite actor from your account
     h4 Supporting technologies
     ul(class='largeList')
         li Ubuntu 19.10 VM on Azure as OS

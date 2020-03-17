@@ -77,6 +77,62 @@ module.exports = function(io) {
                     }
                 });
         });
+        socket.on('deleteMovieFromList', function(data, fn) {
+            mysqlPool.query(`
+                DELETE FROM usersMovies
+                WHERE userID = :userID
+                AND movieID = :movieID`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem deleting the movie from your list');
+                    } else {
+                        fn('The movie was removed from your list');
+                    }
+                });
+        });
+        socket.on('changePassword', function(data, fn) {
+            mysqlPool.query(`
+                UPDATE users
+                SET password = :password
+                WHERE userID = :userID`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem updating your password.');
+                    } else {
+                        fn('Your password was updated');
+                    }
+                });
+        });
+        socket.on('addFavoriteActor', function(data, fn) {
+            mysqlPool.query(`
+                UPDATE users
+                SET actorID = :actorID
+                WHERE userID = :userID`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem saving favorite actor. Are you logged in?');
+                    } else {
+                        fn('Your favorite actor was saved');
+                    }
+                });
+        });
+        socket.on('deleteFavoriteActor', function(data, fn) {
+            mysqlPool.query(`
+                UPDATE users
+                SET actorID = NULL
+                WHERE userID = :userID`,
+                data,
+                function(err, rows, fields) {
+                    if (err) {
+                        fn('There was a problem removing your favorite actor');
+                    } else {
+                        fn('Your favorite actor was removed');
+                    }
+                });
+        });
         // socket.on('getRating', function(data, fn) {
         //     mysqlPool.query(`
         //         SELECT rating

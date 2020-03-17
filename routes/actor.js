@@ -33,6 +33,7 @@ router.get('/actor/:id', function(req, res) {
                 }
                 var actor = {
                     'name': rows[0].actorName,
+                    'actorID': rows[0].actorID,
                     'birthday': moment(rows[0].birthday).format('MMM Do, YYYY'),
                     'movies': movieList
                 }

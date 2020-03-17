@@ -4,39 +4,45 @@ block title
 block content
     h1= 'My Account'
     h4 Watched Movies
-    ul(class='verticalListSectioned')
-        li
-            a(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - released #{movieList[0].releaseDate}
-            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
-        //- for movie in movieList
-        //-     li
-        //-         a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
-        //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    if watchedList.length > 0
+        ul(class='verticalListSectioned')
+            for movie in watchedList
+                li 
+                    a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}                    
+                    button.btn-primary.btn.btnDelete.deleteMovieFromList(data-movieID=movie.movieID) Delete
+    else
+        p No Movies in List
+
     h4 Watch Later
-    ul(class='verticalListSectioned')
-        li
-            a(href='/movie/'+movieList[1].movieID) #{movieList[1].name} - released #{movieList[1].releaseDate}
-            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
-        //- for movie in movieList
-        //-     li
-        //-         a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
-        //-         button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
-    h4 Favorite Actors
-    ul(class='verticalListSectioned')
-        li
-            a(href='/actor/1') Morgan Freeman
-            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
-        li
-            a(href='/actor/2') Tim Robbins
-            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
+    if watchLaterList.length > 0
+        ul(class='verticalListSectioned')
+            for movie in watchLaterList
+                li  
+                    a(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
+                    button.btn-primary.btn.btnDelete.deleteMovieFromList(data-movieID=movie.movieID) Delete
+    else
+        p No Movies in List
+    h4#listStatus.red
+    h4 Favorite Actor
+    if favoriteActor.length > 0
+        ul(class='verticalListSectioned')
+            li
+                a(href='/actor/'+favoriteActor[0].actorID) #{favoriteActor[0].name}
+                button.btn-primary.btn.btnDelete.deleteFavoriteActor Delete
+    else
+        p No favorite actor
     h4 My Ratings
-    ul(class='verticalListSectioned')
-        li
-            span.ratingView 8
-            a.ratingView(href='/movie/'+movieList[0].movieID) #{movieList[0].name} - released #{movieList[0].releaseDate}
-            button.btn-primary.btn.btnDelete(onclick="divStatus=document.getElementById('status');divStatus.innerHTML='Added as watched';divStatus.style.color='#f00';setTimeout(function(){divStatus.style.color='#fff';},1000);") Delete
-    h4 Change Password
-    form.narrow(method='POST' action='/myAccount')
+    if ratingsList.length > 0
+        for movie in watchedList
+            ul(class='verticalListSectioned')
+                li
+                    span.ratingView #{movie.rating}
+                    a.ratingView(href='/movie/'+movie.movieID) #{movie.name} - released #{movie.releaseDate}
+                    button.btn-primary.btn.btnDelete.deleteMovieRating(data-movieID=movie.movieID) Delete
+    else
+        p You have not rated any movies
+    h4#changePasswordResult Change Password
+    form.narrow
         div.relative
             input.form-control(type='password' name='password' required)
             span.placeholderLabel New Password
@@ -44,3 +50,54 @@ block content
             input.form-control(type='password' name='confirmPassword' required)
             span.placeholderLabel Confirm Password
         button.btn.btn-primary(type='submit') Change Password
+
+    script(src="/socket.io/socket.io.js")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    script.
+        var socket = io();
+        //- Delete movies from watched and watch later lists
+        $('.deleteMovieFromList').on('click', function(e){
+            socket.emit('deleteMovieFromList', {
+                userID: #{sessionUserID},
+                movieID: $(this).attr('data-movieID')
+            },
+            function (data) {
+                location.reload();
+            });            
+        });
+        //- Delete movie rating
+        $('.deleteMovieRating').on('click', function(e){
+            socket.emit('deleteMovieFromList', {
+                userID: #{sessionUserID},
+                movieID: $(this).attr('data-movieID')
+            },
+            function (data) {
+                location.reload();
+            });            
+        });
+        //- Delete favorite actor
+        var parent;
+        $('.deleteFavoriteActor').on('click', function(e){
+            socket.emit('deleteFavoriteActor', {
+                userID: #{sessionUserID}
+            },
+            function (data) {
+                location.reload();
+            });            
+        });
+        //- Change password form
+        $('form').submit(function(e){
+            e.preventDefault();
+            password = $('input[name="password"]').val();
+            confirmPassword = $('input[name="confirmPassword"]').val();
+            if (password != confirmPassword){
+                $('#changePasswordResult').addClass('red').text('Passwords do not match');
+                return false;
+            }
+            socket.emit('changePassword', {
+                userID: #{sessionUserID},
+                password: password
+            }, function (data) {
+                $('#changePasswordResult').text('Password changed');
+            });
+        });

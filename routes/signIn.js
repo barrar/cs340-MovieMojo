@@ -33,8 +33,9 @@ router.post('/signIn', recaptcha.middleware.render, recaptcha.middleware.verify,
     }
 });
 
-router.get('/signIn/signOut', function(req, res) {
+router.get('/signIn/signOut', async function(req, res) {
     req.session.destroy();
+    await new Promise(resolve => setTimeout(resolve, 500));
     res.redirect('/');
 });
 
